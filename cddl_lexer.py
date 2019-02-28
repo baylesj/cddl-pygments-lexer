@@ -6,6 +6,8 @@ from pygments.token import Text, Comment, Operator, Keyword, Name, String, \
 
 # Based on draft spec here:
 # https://tools.ietf.org/html/draft-ietf-cbor-cddl-05#section-3
+
+
 class CustomLexer(RegexLexer):
     name = 'CDDL'
     aliases = ['cddl']
