@@ -16,16 +16,9 @@ class CustomLexer(RegexLexer):
     tokens = {
         'root': [
             (r'\n', Text),
-            (r'[\-\_\@\.\$\s]+', Text),
+            (r'\s+', Text),
             (r'\\\n', Text),  # line continuations
             (r';[^\n]*\n', Comment.Single),
-            (r'(var|func|struct|map|chan|type|interface|const)\b',
-             Keyword.Declaration),
-            (words((
-                'break', 'default', 'select', 'case', 'defer', 'go',
-                'else', 'goto', 'switch', 'fallthrough', 'if', 'range',
-                'continue', 'for', 'return'), suffix=r'\b'),
-             Keyword),
 
             (r'(true|false|null|nil)\b', Keyword.Constant),
 
@@ -45,15 +38,11 @@ class CustomLexer(RegexLexer):
             # Representation type
             (r'#[0-7](\.\d+)?', Keyword.Type),
 
-            # imaginary_lit
-            (r'\d+i', Number),
-            (r'\d+\.\d*([Ee][-+]\d+)?i', Number),
-            (r'\.\d+([Ee][-+]\d+)?i', Number),
-            (r'\d+[Ee][-+]\d+i', Number),
             # float_lit
             (r'\d+(\.\d+[eE][+\-]?\d+|'
              r'\.\d*|[eE][+\-]?\d+)', Number.Float),
             (r'\.\d+([eE][+\-]?\d+)?', Number.Float),
+
             # int_lit
             # -- octal_lit
             (r'0[0-7]+', Number.Oct),
@@ -61,21 +50,25 @@ class CustomLexer(RegexLexer):
             (r'0[xX][0-9a-fA-F]+', Number.Hex),
             # -- decimal_lit
             (r'(0|[1-9][0-9]*)', Number.Integer),
+
             # char_lit
             (r"""'(\\['"\\abfnrtv]|\\x[0-9a-fA-F]{2}|\\[0-7]{1,3}"""
              r"""|\\u[0-9a-fA-F]{4}|\\U[0-9a-fA-F]{8}|[^\\])'""",
              String.Char),
+
             # StringLiteral
             # -- raw_string_lit
             (r'`[^`]*`', String),
             # -- interpreted_string_lit
             (r'"(\\\\|\\"|[^"])*"', String),
+
             # Tokens
             (r'(<<=|>>=|<<|>>|<=|>=|&\^=|&\^|\+=|-=|\*=|/=|%=|&=|\|=|&&|\|\|'
-             r'|<-|\+\+|--|==|!=|:=|\.\.\.|[+\-*/%&])', Operator),
-            (r'#', Keyword.Constant),
+             r'|<-|\+\+|--|==|!=|:=|\.\.\.|[+*/%&])', Operator),
+
             (r'[|^<>=!?()\[\]{}.,:]', Punctuation),
-            # identifier
-            (r'[^\W\d]\w*', Name.Other),
+
+            # Identifier
+            (r'[a-zA-Z0-9\-\_\@\.\$\s]+', Name.Other),
         ]
     }
