@@ -1,0 +1,188 @@
+<div class="highlight"><pre><span></span><span class="nx">open-screen-message </span><span class="p">=</span>
+  <span class="kt">#6.2000</span><span class="p">(</span><span class="nx">presentation-url-availability-request</span><span class="p">)</span> <span class="o">/</span>
+  <span class="kt">#6.2001</span><span class="p">(</span><span class="nx">presentation-url-availability-response</span><span class="p">)</span> <span class="o">/</span>
+  <span class="kt">#6.2002</span><span class="p">(</span><span class="nx">presentation-url-availability-event</span><span class="p">)</span> <span class="o">/</span>
+  <span class="kt">#6.2010</span><span class="p">(</span><span class="nx">presentation-initiation-request</span><span class="p">)</span> <span class="o">/</span>
+  <span class="kt">#6.2011</span><span class="p">(</span><span class="nx">presentation-initiation-response</span><span class="p">)</span> <span class="o">/</span>
+  <span class="kt">#6.2012</span><span class="p">(</span><span class="nx">presentation-termination-request</span><span class="p">)</span> <span class="o">/</span>
+  <span class="kt">#6.2013</span><span class="p">(</span><span class="nx">presentation-termination-response</span><span class="p">)</span> <span class="o">/</span>
+  <span class="kt">#6.2014</span><span class="p">(</span><span class="nx">presentation-termination-event</span><span class="p">)</span> <span class="o">/</span>
+  <span class="kt">#6.2020</span><span class="p">(</span><span class="nx">presentation-connection-open-request</span><span class="p">)</span> <span class="o">/</span>
+  <span class="kt">#6.2021</span><span class="p">(</span><span class="nx">presentation-connection-open-response</span><span class="p">)</span> <span class="o">/</span>
+  <span class="kt">#6.2022</span><span class="p">(</span><span class="nx">presentation-connection-close-request</span><span class="p">)</span> <span class="o">/</span>
+  <span class="kt">#6.2024</span><span class="p">(</span><span class="nx">presentation-connection-close-event</span><span class="p">)</span> <span class="o">/</span>
+  <span class="kt">#6.2030</span><span class="p">(</span><span class="nx">presentation-connection-message</span><span class="p">)</span> <span class="o">/</span>
+  <span class="kt">#6.2040</span><span class="p">(</span><span class="nx">presentation-receiver-status-event</span><span class="p">)</span>
+
+<span class="c1">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="c1">;;;; Common message definitions</span>
+<span class="c1">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
+
+<span class="nx">result </span><span class="p">=</span> <span class="p">(</span>
+  <span class="nx">success</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="nx">timeout</span><span class="p">:</span> <span class="mi">100</span>
+  <span class="nx">transient-error</span><span class="p">:</span> <span class="mi">101</span>
+  <span class="nx">permanent-error</span><span class="p">:</span> <span class="mi">102</span>
+  <span class="nx">unknown-error</span><span class="p">:</span> <span class="mi">199</span>
+<span class="p">)</span>
+
+<span class="nx">request-id </span><span class="p">=</span> <span class="kt">uint</span>
+<span class="nx">microseconds </span><span class="p">=</span> <span class="kt">uint</span>
+<span class="nx">url </span><span class="p">=</span> <span class="nx">text</span>
+
+<span class="nx">request </span><span class="p">=</span> <span class="p">(</span>
+  <span class="nx">request-id</span><span class="p">:</span> <span class="nx">request-id</span>
+<span class="p">)</span>
+
+<span class="nx">response </span><span class="p">=</span> <span class="p">(</span>
+  <span class="nx">request-id</span><span class="p">:</span> <span class="nx">request-id</span>
+<span class="p">)</span>
+
+<span class="nx">timestamp </span><span class="p">=</span> <span class="p">(</span>
+  <span class="nx">timestamp</span><span class="p">:</span> <span class="nx">microseconds</span>
+<span class="p">)</span>
+
+<span class="c1">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
+<span class="c1">;;;; Presentation API definitions</span>
+<span class="c1">;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;</span>
+
+<span class="nx">presentation-url-availability-request </span><span class="p">=</span> <span class="p">{</span>
+  <span class="nx">request</span>
+<span class="nx">  urls</span><span class="p">:</span> <span class="p">[</span><span class="o">*</span> <span class="nx">url</span><span class="p">]</span>
+  <span class="nx">watch-duration</span><span class="p">:</span> <span class="kt">uint</span>
+  <span class="nx">watch-id</span><span class="p">:</span> <span class="kt">uint</span>
+<span class="p">}</span>
+
+<span class="nx">presentation-url-availability-response </span><span class="p">=</span> <span class="p">{</span>
+  <span class="nx">response</span>
+<span class="nx">  url-availabilities</span><span class="p">:</span> <span class="p">[</span><span class="o">*</span> <span class="nx">presentation-url-availability</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="nx">presentation-url-availability-event </span><span class="p">=</span> <span class="p">{</span>
+  <span class="nx">watch-id</span><span class="p">:</span> <span class="kt">uint</span>
+  <span class="nx">urls</span><span class="p">:</span> <span class="p">[</span><span class="o">*</span> <span class="nx">url</span><span class="p">]</span>
+  <span class="nx">url-availabilities</span><span class="p">:</span> <span class="p">[</span><span class="o">*</span> <span class="nx">presentation-url-availability</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="nx">presentation-id </span><span class="p">=</span> <span class="nx">text</span>
+
+<span class="nx">presentation-initiation-request </span><span class="p">=</span> <span class="p">{</span>
+  <span class="nx">request</span>
+<span class="nx">  presentation-id</span><span class="p">:</span> <span class="nx">presentation-id</span>
+<span class="nx">  url</span><span class="p">:</span> <span class="nx">url</span>
+<span class="nx">  headers</span><span class="p">:</span> <span class="nx">text</span>
+<span class="nx">  </span><span class="p">?</span> <span class="nx">connection-id</span><span class="p">:</span> <span class="nx">presentation-connection-id</span>
+<span class="p">}</span>
+
+<span class="nx">presentation-url-availability </span><span class="p">=</span> <span class="o">&amp;</span><span class="p">(</span>
+  <span class="nx">not-compatible</span><span class="p">:</span> <span class="mi">0</span>
+  <span class="nx">compatible</span><span class="p">:</span> <span class="mi">1</span>
+  <span class="nx">not-valid</span><span class="p">:</span> <span class="mi">10</span>
+<span class="p">)</span>
+
+<span class="nx">presentation-initiation-response </span><span class="p">=</span> <span class="p">{</span>
+  <span class="nx">response</span>
+<span class="nx">  result</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">(</span><span class="nx">result</span><span class="p">,</span> <span class="nx">url-not-valid</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
+  <span class="p">?</span> <span class="nx">connection-result</span><span class="p">:</span> <span class="nx">presentation-connection-open-result</span>
+<span class="p">}</span>
+
+<span class="nx">presentation-connection-open-result </span><span class="p">=</span> <span class="o">&amp;</span><span class="p">(</span>
+  <span class="nx">result</span>
+<span class="nx">  presentation-unknown-presentation-id</span>
+<span class="nx">  presentation-terminating</span>
+<span class="p">)</span>
+
+<span class="c1">; Separate enum to avoid redefinition.</span>
+<span class="nx">presentation-unknown-presentation-id </span><span class="p">=</span> <span class="p">(</span>
+  <span class="nx">unknown-presentation-id</span><span class="p">:</span> <span class="mi">12</span>
+<span class="p">)</span>
+
+<span class="nx">presentation-terminating </span><span class="p">=</span> <span class="p">(</span>
+  <span class="nx">presentation-terminating</span><span class="p">:</span> <span class="mi">103</span>
+<span class="p">)</span>
+
+<span class="nx">presentation-termination-request </span><span class="p">=</span> <span class="p">{</span>
+  <span class="nx">request</span>
+<span class="nx">  presentation-id</span><span class="p">:</span> <span class="nx">presentation-id</span>
+<span class="nx">  reason</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">(</span>
+    <span class="nx">terminated-by-controller</span><span class="p">:</span> <span class="mi">10</span>
+    <span class="nx">user-terminated-via-controller</span><span class="p">:</span> <span class="mi">11</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">presentation-termination-response </span><span class="p">=</span> <span class="p">{</span>
+  <span class="nx">response</span>
+<span class="nx">  result</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">(</span>
+    <span class="nx">result</span><span class="p">,</span>
+    <span class="nx">invalid-presentation-id</span><span class="p">:</span> <span class="mi">10</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">presentation-termination-event </span><span class="p">=</span> <span class="p">{</span>
+  <span class="nx">presentation-id</span><span class="p">:</span> <span class="nx">presentation-id</span>
+<span class="nx">  reason</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">(</span>
+    <span class="nx">receiver</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="nx">user-via-receiver</span><span class="p">:</span> <span class="mi">2</span>
+    <span class="nx">receiver-shutting-down</span><span class="p">:</span> <span class="mi">3</span>
+    <span class="nx">controller</span><span class="p">:</span> <span class="mi">10</span>
+    <span class="nx">user-via-controller</span><span class="p">:</span> <span class="mi">11</span>
+    <span class="nx">new-replacing-current</span><span class="p">:</span> <span class="mi">20</span>
+    <span class="nx">unloaded</span><span class="p">:</span> <span class="mi">21</span>
+    <span class="nx">idle-too-long</span><span class="p">:</span> <span class="mi">30</span>
+    <span class="nx">terminate</span><span class="p">:</span> <span class="mi">40</span>
+  <span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">presentation-connection-open-request </span><span class="p">=</span> <span class="p">{</span>
+  <span class="nx">request</span>
+<span class="nx">  presentation-id</span><span class="p">:</span> <span class="nx">presentation-id</span>
+<span class="nx">  connection-id</span><span class="p">:</span> <span class="nx">presentation-connection-id</span>
+<span class="p">}</span>
+
+<span class="nx">presentation-connection-open-response </span><span class="p">=</span> <span class="p">{</span>
+  <span class="nx">response</span>
+<span class="nx">  result</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">(</span>
+    <span class="nx">result</span>
+<span class="nx">    presentation-unknown-presentation-id</span>
+<span class="nx">    presentation-terminating</span>
+<span class="nx">  </span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">presentation-connection-close-request </span><span class="p">=</span> <span class="p">{</span>
+  <span class="nx">request</span>
+<span class="nx">  presentation-id</span><span class="p">:</span> <span class="nx">presentation-id</span>
+<span class="nx">  connection-id</span><span class="p">:</span> <span class="nx">presentation-connection-id</span>
+<span class="p">}</span>
+
+<span class="nx">presentation-connection-close-event </span><span class="p">=</span> <span class="p">{</span>
+  <span class="nx">presentation-id</span><span class="p">:</span> <span class="nx">presentation-id</span>
+<span class="nx">  connection-id</span><span class="p">:</span> <span class="nx">presentation-connection-id</span>
+<span class="nx">  reason</span><span class="p">:</span> <span class="o">&amp;</span><span class="p">(</span>
+    <span class="nx">close-method</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="nx">connection-destruction</span><span class="p">:</span> <span class="mi">10</span>
+    <span class="nx">unrecoverable-error</span><span class="p">:</span> <span class="mi">100</span>
+  <span class="p">)</span>
+  <span class="p">?</span> <span class="nx">error-message</span><span class="p">:</span> <span class="nx">text</span>
+<span class="p">}</span>
+
+<span class="nx">presentation-connection-id </span><span class="p">=</span> <span class="kt">uint</span>
+
+<span class="nx">presentation-connection-message </span><span class="p">=</span> <span class="p">[</span>
+  <span class="nx">presentation-id</span><span class="p">:</span> <span class="nx">presentation-id</span>
+<span class="nx">  connection-id</span><span class="p">:</span> <span class="nx">presentation-connection-id</span>
+<span class="nx">  message</span><span class="p">:</span> <span class="nx">bytes </span><span class="o">/</span> <span class="nx">text</span>
+<span class="p">]</span>
+
+<span class="nx">presentation-receiver-status-event </span><span class="p">=</span> <span class="p">{</span>
+  <span class="nx">timestamp</span>
+<span class="nx">  friendly-name</span><span class="p">:</span> <span class="nx">text</span>
+<span class="nx">  presentations</span><span class="p">:</span> <span class="p">[</span><span class="o">*</span> <span class="nx">presentation-status</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="nx">presentation-status </span><span class="p">=</span> <span class="p">{</span>
+  <span class="nx">id</span><span class="p">:</span> <span class="nx">presentation-id</span>
+<span class="nx">  url</span><span class="p">:</span> <span class="nx">url</span>
+<span class="nx">  title</span><span class="p">:</span> <span class="nx">text</span>
+<span class="nx">  connection-count</span><span class="p">:</span> <span class="kt">uint</span>
+<span class="p">}</span>
+</pre></div>
