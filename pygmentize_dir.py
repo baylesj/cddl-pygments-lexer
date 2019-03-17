@@ -14,7 +14,7 @@ def pygmentize_file(lexer, filename):
   with open(filename, 'r') as f:
     contents = f.read()
 
-  formatter = HtmlFormatter(style='monokai', cssfile='style.css')
+  formatter = HtmlFormatter(style='monokai', full=True)
 
   return_val = highlight(contents, lexer, formatter)
   output_filename = "{}.html".format(os.path.splitext(filename)[0])
