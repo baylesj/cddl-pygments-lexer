@@ -1,34 +1,36 @@
 #!/usr/bin/env python
 
 import os
+from glob import glob
 
 from pygments.formatters.html import HtmlFormatter
 from pygments.lexers import load_lexer_from_file
 from pygments import highlight
 
-TEST_FILENAME = "osp_messages.cddl"
 LEXER_FILENAME = "cddl_lexer.py"
+OUTPUT_EXTENSION = ".html"
 
-def pygmentize_file(lexer, filename):
+def pygmentize_file(lexer, formatter, filename):
   print("Reading file from: {}".format(filename))
   with open(filename, 'r') as f:
     contents = f.read()
 
-  formatter = HtmlFormatter(style='monokai', full=True)
-
   return_val = highlight(contents, lexer, formatter)
-  output_filename = "{}.html".format(os.path.splitext(filename)[0])
+  output_filename = "{}{}".format(os.path.splitext(filename)[0],
+                                  OUTPUT_EXTENSION)
 
   with open(output_filename, 'w') as f:
     print("Pygmentizing output to: {}".format(output_filename))
     f.write(return_val)
 
 
-def pygmentize_dir(lexer):
-  for filename in os.listdir("."):
-    if filename.endswith(".cddl"):
-      pygmentize_file(lexer, filename)
+def pygmentize_dir(lexer, formatter):
+  for filename_match in lexer.filenames:
+    for filename in glob(filename_match):
+      pygmentize_file(lexer, formatter, filename)
 
 if __name__ == "__main__":
+  formatter = HtmlFormatter(style='monokai', full=True)
   lexer = load_lexer_from_file(LEXER_FILENAME)
-  pygmentize_dir(lexer)
+
+  pygmentize_dir(lexer, formatter)
